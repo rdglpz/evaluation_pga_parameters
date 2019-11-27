@@ -42,11 +42,15 @@ class evaluateFuturesParams:
     overwrite = True
     def __init__(self):  
         self.calibration_results = "calib_python_script.csv"
-        os.remove(self.calibration_results)
+#        os.remove(self.calibration_results)
         print("File ",self.calibration_results," Removed!")
 	
     def f(self,X):
-        os.remove(self.calibration_results)
+        try:
+            filePath = self.calibration_results
+            os.remove(filePath)
+        except:
+            print("Error while deleting file ", filePath)
         print("Evaluating s", X)
         self.compactness_mean = str(X[0])
         self.compactness_range = str(X[1])
@@ -75,6 +79,7 @@ class evaluateFuturesParams:
         overwrite=self.overwrite
         )
         self.results = pd.read_csv(self.calibration_results)
+        os.remove(self.calibration_results)
         return self.results
         
 
